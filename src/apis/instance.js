@@ -1,26 +1,32 @@
 import axios from "axios";
 
+const getAccessToken = () => {
+    return localStorage.getItem("access_token") !== undefined
+        && localStorage.getItem("access_token") !== null
+        && localStorage.getItem("access_token") !== "null"
+        && localStorage.getItem("access_token").trim() !== ""
+        ? "Bearer " + localStorage.getItem("access_token") : "";
+}
+
 export const instance = axios.create({
     baseURL: "",//process.env.REACT_APP_API_URL,
     headers: {
-        "access_token": localStorage.getItem("access_token") === undefined ? "" : localStorage.getItem("token"),
+        "Authorization": getAccessToken(),
         "Content-Type": "application/json",
     },
 
     withCredentials: true,
 });
 
-// 응답 인터셉터 추가하기
 instance.interceptors.response.use(function (response) {
-    // 2xx 범위에 있는 상태 코드는 이 함수를 트리거 합니다.
-    // 응답 데이터가 있는 작업 수행
     return response;
 }, function (error) {
-    // 2xx 외의 범위에 있는 상태 코드는 이 함수를 트리거 합니다.
-    // 응답 오류가 있는 작업 수행
     console.log("error : ", error);
     switch (error.response.data.statusCode) {
         case 400:
+            alert(error.response.data.message);
+            break;
+        case 401:
             alert(error.response.data.message);
             break;
         case 404:
@@ -29,5 +35,15 @@ instance.interceptors.response.use(function (response) {
         default:
             break;
     }
+
+    switch (error.response.status) {
+        case 500:
+            alert(error.response.statusText);
+            break;
+        default:
+            break;
+    }
+
+
     return Promise.reject(error);
 });

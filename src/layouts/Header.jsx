@@ -25,6 +25,6 @@ const Header = () => {
 export default Header;
 
 const StHeaderWrap = styled.div`
-    height : 10vh;
+    height : 5vh;
     background-color : pink;
 `

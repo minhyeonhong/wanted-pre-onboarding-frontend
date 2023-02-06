@@ -20,8 +20,9 @@ export default Layout;
 
 const StLayoutWrap = styled.div`
     text-align: center;
+    
 `
 
 const StBody = styled.div`
-    min-height : 100vh;
+    min-height : 90vh;
 `

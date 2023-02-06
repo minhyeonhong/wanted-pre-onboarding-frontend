@@ -12,6 +12,6 @@ const Footer = () => {
 export default Footer;
 
 const StFooterWrap = styled.div`
-    height : 10vh;
+    height : 5vh;
     background-color : pink;
 `

@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import styled from 'styled-components';
 import useInput from '../hooks/useInput';
 import { memberApis } from '../apis/member';
+import { StValitext } from '../styles/common/loginJoin.styled';
 
 
 const LoginPage = () => {
@@ -14,11 +15,19 @@ const LoginPage = () => {
         password: ""
     });
 
-    useEffect(() => {
-        if (localStorage.getItem("access_token") !== null) {
-            navigate("/todo");
+    const validation = (type, value) => {
+        let result = false;
+
+        switch (type) {
+            case "checkEmail":
+                result = /([\w-.]+)@([\w-.]+)$/.test(value);
+                break;
+            case "checkPasswordLength":
+                result = value.length > 7;
+                break;
         }
-    }, [])
+        return result;
+    }
 
     const login = async () => {
         const result = await memberApis.signAX(loginData);
@@ -30,13 +39,19 @@ const LoginPage = () => {
         }
     }
 
-
+    useEffect(() => {
+        if (localStorage.getItem("access_token") !== null) {
+            navigate("/todo");
+        }
+    }, [])
 
     return (
         <Layout>
             <StLoginPageWrap>
                 <div><input type="text" data-testid="email-input" name="email" onChange={loginDataHandle} value={loginData.email || ""} placeholder="Email 아이디" /></div>
+                <StValitext textColor={"#f96854"}>{!validation("checkEmail", loginData.email) && loginData.email !== "" && "Email 형식이 아니에요."}</StValitext>
                 <div><input type="password" data-testid="password-input" name="password" onChange={loginDataHandle} value={loginData.password || ""} placeholder="비밀번호" /></div>
+                <StValitext textColor={"#f96854"}>{!validation("checkPasswordLength", loginData.password) && loginData.password !== "" && "비밀번호는 8자 이상 입력해주세요."}</StValitext>
                 <div>
                     <button onClick={login} data-testid="signin-button">로그인</button>
                     <button onClick={() => { navigate("/signup") }}>회원가입</button>

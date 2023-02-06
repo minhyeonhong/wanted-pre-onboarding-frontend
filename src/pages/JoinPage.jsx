@@ -4,7 +4,7 @@ import Layout from '../layouts/Layout';
 import useInput from '../hooks/useInput';
 import { useNavigate } from "react-router-dom";
 import { memberApis } from "../apis/member";
-
+import { StValitext } from '../styles/common/loginJoin.styled';
 
 const JoinPage = () => {
     const navigate = useNavigate();
@@ -63,7 +63,7 @@ const JoinPage = () => {
             password: "",
             matchPassword: ""
         });
-        navigate("/sign");
+        navigate("/signin");
     }
 
     return (
@@ -94,7 +94,3 @@ export default JoinPage;
 const StJoinPageWrap = styled.div`
     
 `
-const StValitext = styled.div`
-  font-size: 0.7rem;
-  color: ${(props) => props.textColor};
-`;
