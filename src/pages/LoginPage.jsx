@@ -39,7 +39,7 @@ const LoginPage = () => {
             alert("로그인 성공!");
             localStorage.setItem("user_email", loginData.email);
             localStorage.setItem("access_token", result.data.access_token);
-            navigate("/todo");
+            window.location.replace("/todo");
         }
     }
 

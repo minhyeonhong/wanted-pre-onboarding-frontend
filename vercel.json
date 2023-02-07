@@ -2,11 +2,11 @@
     "rewrites": [
       {
         "source": "/auth/:path*",
-        "destination": "https://pre-onboarding-selection-task.shop/:path*"
+        "destination": "https://pre-onboarding-selection-task.shop/auth/:path*"
       },
       {
         "source": "/todos/:path*",
-        "destination": "https://pre-onboarding-selection-task.shop/:path*"
+        "destination": "https://pre-onboarding-selection-task.shop/todos/:path*"
       }
     ]
   }
