@@ -5,11 +5,11 @@ const getAccessToken = () => {
         && localStorage.getItem("access_token") !== null
         && localStorage.getItem("access_token") !== "null"
         && localStorage.getItem("access_token").trim() !== ""
-        ? "Bearer " + localStorage.getItem("access_token") : "";
+        ? `Bearer ${localStorage.getItem("access_token")}` : "";
 }
 
 export const instance = axios.create({
-    baseURL: "",//process.env.REACT_APP_API_URL,
+    baseURL: process.env.REACT_APP_API_URL,
     headers: {
         "Authorization": getAccessToken(),
         "Content-Type": "application/json",
