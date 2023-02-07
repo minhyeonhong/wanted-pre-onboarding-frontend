@@ -20,7 +20,6 @@ export default Layout;
 
 const StLayoutWrap = styled.div`
     text-align: center;
-    
 `
 
 const StBody = styled.div`

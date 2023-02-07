@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { useNavigate } from "react-router-dom";
+import { StButton } from '../styles/common/button.styled';
 
 const Header = () => {
     const navigate = useNavigate();
@@ -12,10 +13,14 @@ const Header = () => {
 
     return (
         <StHeaderWrap>
-            {localStorage.getItem("access_token") !== null &&
+            {localStorage.getItem("access_token") !== null ?
                 <div>
-                    {localStorage.getItem("user_email")}님의 Todo List
-                    <button onClick={logout}>로그아웃</button>
+                    <span>{localStorage.getItem("user_email")}님의 Todo List</span>
+                    <StButton color="#F0A4BD" backgroundColor="#ffff" marginLeft="20px" onClick={logout}>로그아웃</StButton>
+                </div>
+                :
+                <div>
+                    wanted-pre-onboarding-frontend-assignment
                 </div>
             }
         </StHeaderWrap>
@@ -26,5 +31,7 @@ export default Header;
 
 const StHeaderWrap = styled.div`
     height : 5vh;
-    background-color : pink;
+    line-height : 5vh;
+    background-color : #F0A4BD;
+    color : #ffff;
 `

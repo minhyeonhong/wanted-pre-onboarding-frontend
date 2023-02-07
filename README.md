@@ -2,13 +2,13 @@
 
 - 프로젝트의 설치 및 실행 방법
 
-        github에서 clone을 받은후 package.json의 proxy속성값을 "http://localhost:8000"로 수정해 줍니다.
-        
+        $ git clone https://github.com/minhyeonhong/wanted-pre-onboarding-frontend.git
         $ npm install
         $ npm start
 
 
-- 배포 링크
+- 배포 링크<br/>
+https://wanted-pre-onboarding-frontend-lac.vercel.app/
 
 <br/>
 
