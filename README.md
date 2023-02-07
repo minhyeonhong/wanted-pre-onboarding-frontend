@@ -43,3 +43,6 @@ createTodo api 요청시 토큰이 잘 담겨있었는데 401에러 발생<br/>
 ![image](https://user-images.githubusercontent.com/90454621/217031351-d3ebb3ac-5e42-4d1b-ae4d-e9daceb0ee2e.png)<br/>
  api명세서에 'Bearer'가 있는것을 확인후 발급받은 토큰에 "Bearer " + 토큰의 형식으로 수정하여 해결함
 
+    배포후 api요청시 405에러
+CORS정책 때문에 package.json에 proxy설정을 하여 로컬에서 작업을 했었다.<br/>
+해당 방법은 로컬에서만 동작하고 배포proxy설정은 따로 해줘야했다.
