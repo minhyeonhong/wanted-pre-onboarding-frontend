@@ -90,7 +90,11 @@ const TodoListPage = () => {
         <Layout>
             <StBodyWrap>
                 <StCreateWrap>
-                    <StInput data-testid="new-todo-input" width="400px" name="todo" onChange={createTodoHandle} value={createTodo.todo || ""} placeholder="할 일을 작성해주세요." />
+                    <StInput data-testid="new-todo-input" width="400px" name="todo" onChange={createTodoHandle} value={createTodo.todo || ""} placeholder="할 일을 작성해주세요." onKeyUp={(e) => {
+                        if (e.key === 'Enter') {
+                            addTodo();
+                        }
+                    }} />
                     <StButton data-testid="new-todo-add-button" color="#ffff" backgroundColor="#F0A4BD" marginLeft="5px" onClick={addTodo}>추가</StButton>
                 </StCreateWrap>
                 <StTodoListWrap>
