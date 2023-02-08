@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { todoListApis } from '../apis/todoList';
+import { useNavigate } from "react-router-dom";
 import Todo from '../components/Todo';
 import useInput from '../hooks/useInput';
 import Layout from '../layouts/Layout';
@@ -11,7 +12,7 @@ import {
 } from '../styles/common/body.styled';
 
 const TodoListPage = () => {
-
+    const navigate = useNavigate();
     const [createTodo, setCreateTodo, createTodoHandle] = useInput({
         todo: "",
     });
@@ -74,6 +75,15 @@ const TodoListPage = () => {
 
     useEffect(() => {
         getTodos();
+    }, [])
+
+    useEffect(() => {
+        if (localStorage.getItem("access_token") === undefined
+            || localStorage.getItem("access_token") === null
+            || localStorage.getItem("access_token") === "null"
+            || localStorage.getItem("access_token").trim() === "") {
+            navigate("/signin");
+        }
     }, [])
 
     return (

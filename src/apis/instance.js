@@ -21,13 +21,12 @@ export const instance = axios.create({
 instance.interceptors.response.use(function (response) {
     return response;
 }, function (error) {
-    console.log("error : ", error);
     switch (error.response.data.statusCode) {
         case 400:
             alert(error.response.data.message);
             break;
         case 401:
-            alert(error.response.data.message);
+            alert("로그인 실패");
             break;
         case 404:
             alert(error.response.data.message);

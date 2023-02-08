@@ -34,6 +34,7 @@ export default Todo;
 const StTodoWrap = styled.li`
     display : flex;
     justify-content:space-between;
+    flex-wrap : wrap;
     margin-top : 5px;
 `
 

@@ -66,7 +66,7 @@ const LoginPage = () => {
                 </StInputWrap>
                 <StButtonWrap>
                     <StButton color="#ffff" backgroundColor="#F0A4BD" onClick={login} data-testid="signin-button">로그인</StButton>
-                    <StButton color="#ffff" backgroundColor="#F0A4BD" onClick={() => { navigate("/signup") }}>회원가입</StButton>
+                    <StButton color="#ffff" backgroundColor="#F0A4BD" onClick={() => { navigate("/signup") }} data-testid="signup-button">회원가입</StButton>
                 </StButtonWrap>
             </StBodyWrap>
         </Layout>

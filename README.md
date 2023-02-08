@@ -5,11 +5,20 @@
         $ git clone https://github.com/minhyeonhong/wanted-pre-onboarding-frontend.git
         $ npm install
         $ npm start
-
+보안 상 실제 사용하고 계신 이메일과 패스워드말고 테스트용 이메일, 패스워드 사용을 권장드립니다.
 
 - 배포 링크<br/>
 https://wanted-pre-onboarding-frontend-lac.vercel.app/
 
+<br/>
+
+## 사용 가능한 라이브러리
+- React Router
+- HTTP Client 라이브러리(Axios 등)
+- 스타일링 관련 라이브러리(Sass, Styled Components, Emotion 등)
+- 아이콘 등 UI 관련 라이브러리(Font-Awesome, React-Icons, Bootstrap 등)
+- 기능과 직접적인 연관이 없는 설정관련 라이브러리(craco, dotenv 등)
+<br/>
 <br/>
 
 ## 트러블 슈팅
@@ -41,7 +50,7 @@ package.json에 proxy속성을 추가하는 방식으로 해결함.
     todo: string
 createTodo api 요청시 토큰이 잘 담겨있었는데 401에러 발생<br/>
 ![image](https://user-images.githubusercontent.com/90454621/217031351-d3ebb3ac-5e42-4d1b-ae4d-e9daceb0ee2e.png)<br/>
- api명세서에 'Bearer'가 있는것을 확인후 발급받은 토큰에 "Bearer " + 토큰의 형식으로 수정하여 해결함
+ api명세서에 'Bearer'가 있는것을 확인후 발급받은 토큰에 "Bearer " + 토큰의 형식으로 수정하여 해결함<br/>
 
     배포후 api요청시 405에러
 CORS정책 때문에 package.json에 proxy설정을 하여 로컬에서 작업을 했었다.<br/>
