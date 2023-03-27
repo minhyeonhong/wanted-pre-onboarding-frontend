@@ -1,70 +1,42 @@
-# Getting Started with Create React App
+# 멘토님이 관심사분리한 사전과제
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 주요내용
+- 관심사를 분리
+- index.js에서 bootstrapping하여 필요한 인스턴스들을 초기화
+- <b>인스턴스들이 순수하게 동작하기 때문에 유지 보수에 용이하다.</b>
 
-## Available Scripts
 
-In the project directory, you can run:
+### 관심사 분리
+React
+- UI rendering
+- state management
 
-### `npm start`
+ AuthService 회원 기능 추상 클래스
+- 로그인
+- 회원가입
+- 로그아웃
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+ TodoService todo list 기능 추상 클래스
+- 리스트
+- todo생성
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+httpClient API추상 클래스
+- baseURL설정
+- request할때 마다 header에 Authorization 넣어줌
+- fetch
 
-### `npm test`
+LocalTokenRepository repository추상 클래스
+- save
+- get
+- remove
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+context [props드릴링을 방지하기 위해 context사용]
+- AuthContext
+- TodoContext
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 배운점
+- 관심사를 분리하여 인스턴스들이 순수하게 동작하면 유지 보수가 용이하다.
+- 예를 들어 API가 아직 완성되지 않은 시점에 개발을 한다고 가정했을 때
+API 명세와 같은 기능을 하는 로컬 인스턴스를 만들어 기능 구현을 해놓고 나중에 API가 완성되었을 때 해당 부분만 수정해서 확인하는 형식으로 진행할 수 있다.
+- 이처럼 인스턴스들이 순수하게 동작하기 때문에 라이브러리를 추가하거나 제거할 때도 용이할 것 같다.
