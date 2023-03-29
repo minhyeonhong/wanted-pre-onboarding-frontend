@@ -1,48 +1,51 @@
-import axios from "axios";
+import axios from 'axios';
 
 const getAccessToken = () => {
-    return localStorage.getItem("access_token") !== undefined
-        && localStorage.getItem("access_token") !== null
-        && localStorage.getItem("access_token") !== "null"
-        && localStorage.getItem("access_token").trim() !== ""
-        ? `Bearer ${localStorage.getItem("access_token")}` : "";
-}
+  return localStorage.getItem('access_token') !== undefined &&
+    localStorage.getItem('access_token') !== null &&
+    localStorage.getItem('access_token') !== 'null' &&
+    localStorage.getItem('access_token').trim() !== ''
+    ? `Bearer ${localStorage.getItem('access_token')}`
+    : '';
+};
 
 export const instance = axios.create({
-    baseURL: "",//process.env.REACT_APP_API_URL,
-    headers: {
-        "Authorization": getAccessToken(),
-        "Content-Type": "application/json",
-    },
+  baseURL: '', //process.env.REACT_APP_BASE_URL,
+  headers: {
+    Authorization: getAccessToken(),
+    'Content-Type': 'application/json',
+  },
 
-    withCredentials: true,
+  withCredentials: true,
 });
 
-instance.interceptors.response.use(function (response) {
+instance.interceptors.response.use(
+  function (response) {
     return response;
-}, function (error) {
+  },
+  function (error) {
     switch (error.response.data.statusCode) {
-        case 400:
-            alert(error.response.data.message);
-            break;
-        case 401:
-            alert("로그인 실패");
-            break;
-        case 404:
-            alert(error.response.data.message);
-            break;
-        default:
-            break;
+      case 400:
+        alert(error.response.data.message);
+        break;
+      case 401:
+        alert('로그인 실패');
+        break;
+      case 404:
+        alert(error.response.data.message);
+        break;
+      default:
+        break;
     }
 
     switch (error.response.status) {
-        case 500:
-            alert(error.response.statusText);
-            break;
-        default:
-            break;
+      case 500:
+        alert(error.response.statusText);
+        break;
+      default:
+        break;
     }
 
-
     return Promise.reject(error);
-});
+  }
+);

@@ -1,77 +1,137 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import Layout from '../layouts/Layout';
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
 import { memberApis } from '../apis/member';
 import { StValitext } from '../styles/common/input.styled';
 import { StButton } from '../styles/common/button.styled';
 import { StInput } from '../styles/common/input.styled';
 import {
-    StBodyWrap,
-    StButtonWrap,
-    StInputWrap
+  StBodyWrap,
+  StButtonWrap,
+  StInputWrap,
 } from '../styles/common/body.styled';
+import { useAuth } from "../contexts/AuthContext";
 
 const LoginPage = () => {
-    const navigate = useNavigate();
-    const [loginData, setLoginData, loginDataHandle] = useInput({
-        email: "",
-        password: ""
-    });
+  const navigate = useNavigate();
+  const [loginData, setLoginData, loginDataHandle] = useInput({
+    email: '',
+    password: '',
+  });
 
-    const validation = (type, value) => {
-        let result = false;
+  const {
+    signin: signinService,
+    signup: signupService,
+    logout: logOutService,
+  } = useAuth();
 
-        switch (type) {
-            case "checkEmail":
-                result = /([\w-.]+)@([\w-.]+)$/.test(value);
-                break;
-            case "checkPasswordLength":
-                result = value.length > 7;
-                break;
-        }
-        return result;
+  const validation = (type, value) => {
+    let result = false;
+
+    switch (type) {
+      case 'checkEmail':
+        result = /([\w-.]+)@([\w-.]+)$/.test(value);
+        break;
+      case 'checkPasswordLength':
+        result = value.length > 7;
+        break;
+    }
+    return result;
+  };
+
+  const login = async () => {
+    const result = await memberApis.signAX(loginData);
+    if (result.status === 200) {
+      alert('로그인 성공!');
+      localStorage.setItem('user_email', loginData.email);
+      localStorage.setItem('access_token', result.data.access_token);
+      window.location.replace('/todo');
+    }
+  };
+
+  const signin = async () => {
+    const result = await signinService(loginData.email, loginData.password)
+    console.log("result", result);
+    if (result.status === 200) {
+      alert('로그인 성공!');
+      window.location.replace('/todo');
+      //navigate('/todo', { replace: true });
     }
 
-    const login = async () => {
-        const result = await memberApis.signAX(loginData);
-        if (result.status === 200) {
-            alert("로그인 성공!");
-            localStorage.setItem("user_email", loginData.email);
-            localStorage.setItem("access_token", result.data.access_token);
-            window.location.replace("/todo");
-        }
+  }
+
+  useEffect(() => {
+    if (localStorage.getItem('access_token') !== null) {
+      navigate('/todo');
     }
+  }, []);
 
-    useEffect(() => {
-        if (localStorage.getItem("access_token") !== null) {
-            navigate("/todo");
-        }
-    }, [])
+  return (
+    <Layout>
+      <StBodyWrap>
+        <StInputWrap>
+          <div>로그인</div>
+          <div>
+            <StInput
+              type='text'
+              data-testid='email-input'
+              name='email'
+              onChange={loginDataHandle}
+              value={loginData.email || ''}
+              placeholder='Email 아이디'
+            />
+          </div>
+          <StValitext textColor={'#f96854'}>
+            {!validation('checkEmail', loginData.email) &&
+              loginData.email !== '' &&
+              'Email 형식이 아니에요.'}
+          </StValitext>
 
-    return (
-        <Layout>
-            <StBodyWrap>
-                <StInputWrap>
-                    <div>로그인</div>
-                    <div><StInput type="text" data-testid="email-input" name="email" onChange={loginDataHandle} value={loginData.email || ""} placeholder="Email 아이디" /></div>
-                    <StValitext textColor={"#f96854"}>{!validation("checkEmail", loginData.email) && loginData.email !== "" && "Email 형식이 아니에요."}</StValitext>
-
-                    <div><StInput type="password" data-testid="password-input" name="password" onChange={loginDataHandle} value={loginData.password || ""} placeholder="비밀번호" onKeyUp={(e) => {
-                        if (e.key === 'Enter') {
-                            login();
-                        }
-                    }} /></div>
-                    <StValitext textColor={"#f96854"}>{!validation("checkPasswordLength", loginData.password) && loginData.password !== "" && "비밀번호는 8자 이상 입력해주세요."}</StValitext>
-                </StInputWrap>
-                <StButtonWrap>
-                    <StButton color="#ffff" backgroundColor="#F0A4BD" onClick={login} data-testid="signin-button">로그인</StButton>
-                    <StButton color="#ffff" backgroundColor="#F0A4BD" onClick={() => { navigate("/signup") }} data-testid="signup-button">회원가입</StButton>
-                </StButtonWrap>
-            </StBodyWrap>
-        </Layout>
-    );
+          <div>
+            <StInput
+              type='password'
+              data-testid='password-input'
+              name='password'
+              onChange={loginDataHandle}
+              value={loginData.password || ''}
+              placeholder='비밀번호'
+              onKeyUp={e => {
+                if (e.key === 'Enter') {
+                  //login();
+                  signin();
+                }
+              }}
+            />
+          </div>
+          <StValitext textColor={'#f96854'}>
+            {!validation('checkPasswordLength', loginData.password) &&
+              loginData.password !== '' &&
+              '비밀번호는 8자 이상 입력해주세요.'}
+          </StValitext>
+        </StInputWrap>
+        <StButtonWrap>
+          <StButton
+            color='#ffff'
+            backgroundColor='#F0A4BD'
+            //onClick={login}
+            onClick={signin}
+            data-testid='signin-button'>
+            로그인
+          </StButton>
+          <StButton
+            color='#ffff'
+            backgroundColor='#F0A4BD'
+            onClick={() => {
+              navigate('/signup');
+            }}
+            data-testid='signup-button'>
+            회원가입
+          </StButton>
+        </StButtonWrap>
+      </StBodyWrap>
+    </Layout>
+  );
 };
 
 export default LoginPage;
-
