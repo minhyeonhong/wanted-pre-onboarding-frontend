@@ -11,7 +11,7 @@ import {
   StButtonWrap,
   StInputWrap,
 } from '../styles/common/body.styled';
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from '../contexts/AuthContext';
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -21,9 +21,7 @@ const LoginPage = () => {
   });
 
   const {
-    signin: signinService,
-    signup: signupService,
-    logout: logOutService,
+    signin: signinService
   } = useAuth();
 
   const validation = (type, value) => {
@@ -51,15 +49,14 @@ const LoginPage = () => {
   };
 
   const signin = async () => {
-    const result = await signinService(loginData.email, loginData.password)
-    console.log("result", result);
+    const result = await signinService(loginData.email, loginData.password);
+    console.log('result', result);
     if (result.status === 200) {
       alert('로그인 성공!');
       window.location.replace('/todo');
       //navigate('/todo', { replace: true });
     }
-
-  }
+  };
 
   useEffect(() => {
     if (localStorage.getItem('access_token') !== null) {

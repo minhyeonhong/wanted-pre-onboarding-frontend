@@ -11,6 +11,7 @@ import {
   StButtonWrap,
   StInputWrap,
 } from '../styles/common/body.styled';
+import { useAuth } from '../contexts/AuthContext';
 
 const JoinPage = () => {
   const navigate = useNavigate();
@@ -19,6 +20,9 @@ const JoinPage = () => {
       navigate('/todo');
     }
   }, []);
+  const {
+    signup: signupService
+  } = useAuth();
 
   //가입버튼 상태
   const [joinDisabled, setJoinDisabled] = useState(true);
@@ -63,6 +67,14 @@ const JoinPage = () => {
       navigate('/signin');
     }
   };
+
+  const signup = async () => {
+    const response = await signupService(joinData.email, joinData.password);
+    if (response.status === 201) {
+      alert('회원가입 완료!');
+      navigate('/signin');
+    }
+  }
 
   const cansleJoin = () => {
     setJoinData({
@@ -140,7 +152,8 @@ const JoinPage = () => {
             data-testid='signup-button'
             color='#ffff'
             backgroundColor='#F0A4BD'
-            onClick={join}
+            //onClick={join}
+            onClick={signup}
             disabled={joinDisabled}>
             가입하기
           </StButton>
