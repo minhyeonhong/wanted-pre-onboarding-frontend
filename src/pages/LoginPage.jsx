@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import Layout from '../layouts/Layout';
 import { useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
-import { memberApis } from '../apis/member';
 import { StValitext } from '../styles/common/input.styled';
 import { StButton } from '../styles/common/button.styled';
 import { StInput } from '../styles/common/input.styled';
@@ -20,9 +19,7 @@ const LoginPage = () => {
     password: '',
   });
 
-  const {
-    signin: signinService
-  } = useAuth();
+  const { login: loginService } = useAuth();
 
   const validation = (type, value) => {
     let result = false;
@@ -39,22 +36,10 @@ const LoginPage = () => {
   };
 
   const login = async () => {
-    const result = await memberApis.signAX(loginData);
-    if (result.status === 200) {
-      alert('로그인 성공!');
-      localStorage.setItem('user_email', loginData.email);
-      localStorage.setItem('access_token', result.data.access_token);
-      window.location.replace('/todo');
-    }
-  };
-
-  const signin = async () => {
-    const result = await signinService(loginData.email, loginData.password);
-    console.log('result', result);
+    const result = await loginService(loginData.email, loginData.password);
     if (result.status === 200) {
       alert('로그인 성공!');
       window.location.replace('/todo');
-      //navigate('/todo', { replace: true });
     }
   };
 
@@ -95,8 +80,7 @@ const LoginPage = () => {
               placeholder='비밀번호'
               onKeyUp={e => {
                 if (e.key === 'Enter') {
-                  //login();
-                  signin();
+                  login();
                 }
               }}
             />
@@ -111,8 +95,7 @@ const LoginPage = () => {
           <StButton
             color='#ffff'
             backgroundColor='#F0A4BD'
-            //onClick={login}
-            onClick={signin}
+            onClick={login}
             data-testid='signin-button'>
             로그인
           </StButton>

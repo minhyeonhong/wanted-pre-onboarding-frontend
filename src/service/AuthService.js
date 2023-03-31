@@ -23,6 +23,16 @@ export class AuthService {
     return response;
   }
 
+  async login(email, password) {
+    const response = await this.httpClient.axiosAPI.post('auth/signin', { email, password });
+    const { access_token } = await response.data;
+    this.tokenRepository.save(access_token);
+
+    localStorage.setItem('user_email', email);
+
+    return response;
+  }
+
   async signup(email, password) {
     const response = await this.httpClient.fetch('auth/signup', {
       method: 'POST',
@@ -32,6 +42,14 @@ export class AuthService {
     if (!response.ok) {
       throw response;
     }
+
+    return response;
+  }
+
+  async join(email, password) {
+    const response = await this.httpClient.axiosAPI.post('auth/signup', { email, password });
+
+    if (response.status !== 201) throw response;
 
     return response;
   }

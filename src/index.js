@@ -9,13 +9,18 @@ import { AuthProvider } from './contexts/AuthContext';
 import { TodoProvider } from './contexts/TodoContext';
 import { AuthService } from './service/AuthService';
 import { TodoService } from './service/TodoService';
+import { AxiosInstance } from './axios/AxiosInstance';
 
 const localTokenRepository = new LocalTokenRepository();
 const httpClient = new HttpClient(
   process.env.REACT_APP_BASE_URL,
   localTokenRepository
 );
-const authService = new AuthService(httpClient, localTokenRepository);
+const axiosInstance = new AxiosInstance(
+  process.env.REACT_APP_BASE_URL,
+  localTokenRepository
+);
+const authService = new AuthService(axiosInstance, localTokenRepository);
 const todoService = new TodoService(httpClient);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
