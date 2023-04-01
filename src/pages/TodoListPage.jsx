@@ -8,74 +8,35 @@ import Layout from '../layouts/Layout';
 import { StButton } from '../styles/common/button.styled';
 import { StInput } from '../styles/common/input.styled';
 import { StBodyWrap } from '../styles/common/body.styled';
+import { useTodo } from "../contexts/TodoContext";
 
 const TodoListPage = () => {
   const navigate = useNavigate();
   const [createTodo, setCreateTodo, createTodoHandle] = useInput({
     todo: '',
   });
+  const { todos, create } = useTodo();
 
   const [editTodo, setEditTodo, editTodoHandle] = useInput({
     todo: '',
   });
 
-  const [todos, setTodos] = useState([]);
-
   const addTodo = async () => {
     if (createTodo.todo.trim() === '') return;
-
-    const result = await todoListApis.createTodoAX(createTodo);
-
-    if (result.status === 201) {
-      setCreateTodo({ todo: '' });
-      getTodos();
-    }
+    create(createTodo.todo);
   };
 
-  const getTodos = async () => {
-    const result = await todoListApis.getTodosAX();
+  useEffect(() => { console.log("todos", todos); }, [todos])
 
-    if (result.status === 200) {
-      const custom = result.data.map(todo => {
-        return { ...todo, isEdit: false };
-      });
-      setTodos(custom);
-    }
-  };
-
-  const updataHandle = index => {
-    const changeEdit = todos.map((todo, i) => {
-      return i === index
-        ? { ...todo, isEdit: !todo.isEdit }
-        : { ...todo, isEdit: false };
-    });
-    setEditTodo({ todo: todos[index].todo });
-    setTodos(changeEdit);
-  };
-
-  const updateTodo = async (type, todo) => {
-    const result = await todoListApis.updateTodoAX({
-      id: todo.id,
-      todo: {
-        todo: type === 'todo' ? editTodo.todo : todo.todo,
-        isCompleted: type === 'checked' ? !todo.isCompleted : todo.isCompleted,
-      },
-    });
-
-    if (result.status === 200) getTodos();
-  };
-
-  const deleteTodo = async id => {
-    if (!window.confirm('삭제하시겠습니까?')) return;
-
-    const result = await todoListApis.deleteTodoAX(id);
-
-    if (result.status === 204) getTodos();
-  };
-
-  useEffect(() => {
-    getTodos();
-  }, []);
+  // const updataHandle = index => {
+  //   const changeEdit = todos.map((todo, i) => {
+  //     return i === index
+  //       ? { ...todo, isEdit: !todo.isEdit }
+  //       : { ...todo, isEdit: false };
+  //   });
+  //   setEditTodo({ todo: todos[index].todo });
+  //   setTodos(changeEdit);
+  // };
 
   useEffect(() => {
     if (
@@ -121,11 +82,11 @@ const TodoListPage = () => {
                 <Todo
                   todo={todo}
                   i={i}
-                  updateTodo={updateTodo}
-                  updataHandle={updataHandle}
-                  deleteTodo={deleteTodo}
-                  editTodo={editTodo}
-                  editTodoHandle={editTodoHandle}
+                  //updateTodo={updateTodo}
+                  //updataHandle={updataHandle}
+                  //deleteTodo={deleteTodo}
+                  //editTodo={editTodo}
+                  //editTodoHandle={editTodoHandle}
                   key={todo.id}
                 />
               );

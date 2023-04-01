@@ -14,6 +14,8 @@ export class TodoService {
       body: JSON.stringify({ todo }),
     });
 
+    console.log("res", res);
+
     return res.json();
   }
 }
@@ -41,3 +43,23 @@ export class LocalTodoService {
     return newTodo;
   }
 }
+
+// const updateTodo = async (type, todo) => {
+//   const result = await todoListApis.updateTodoAX({
+//     id: todo.id,
+//     todo: {
+//       todo: type === 'todo' ? editTodo.todo : todo.todo,
+//       isCompleted: type === 'checked' ? !todo.isCompleted : todo.isCompleted,
+//     },
+//   });
+
+//   if (result.status === 200) getTodos();
+// };
+
+// const deleteTodo = async id => {
+//   if (!window.confirm('삭제하시겠습니까?')) return;
+
+//   const result = await todoListApis.deleteTodoAX(id);
+
+//   if (result.status === 204) getTodos();
+// };
