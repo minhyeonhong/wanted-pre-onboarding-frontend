@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import { todoListApis } from '../apis/todoList';
 import { useNavigate } from 'react-router-dom';
 import Todo from '../components/Todo';
 import useInput from '../hooks/useInput';
@@ -8,7 +7,7 @@ import Layout from '../layouts/Layout';
 import { StButton } from '../styles/common/button.styled';
 import { StInput } from '../styles/common/input.styled';
 import { StBodyWrap } from '../styles/common/body.styled';
-import { useTodo } from "../contexts/TodoContext";
+import { useTodo } from '../contexts/TodoContext';
 
 const TodoListPage = () => {
   const navigate = useNavigate();
@@ -17,26 +16,10 @@ const TodoListPage = () => {
   });
   const { todos, create } = useTodo();
 
-  const [editTodo, setEditTodo, editTodoHandle] = useInput({
-    todo: '',
-  });
-
-  const addTodo = async () => {
+  const addTodo = () => {
     if (createTodo.todo.trim() === '') return;
     create(createTodo.todo);
   };
-
-  useEffect(() => { console.log("todos", todos); }, [todos])
-
-  // const updataHandle = index => {
-  //   const changeEdit = todos.map((todo, i) => {
-  //     return i === index
-  //       ? { ...todo, isEdit: !todo.isEdit }
-  //       : { ...todo, isEdit: false };
-  //   });
-  //   setEditTodo({ todo: todos[index].todo });
-  //   setTodos(changeEdit);
-  // };
 
   useEffect(() => {
     if (
@@ -77,18 +60,9 @@ const TodoListPage = () => {
         </StCreateWrap>
         <StTodoListWrap>
           <ul>
-            {todos.map((todo, i) => {
+            {todos.map((todo) => {
               return (
-                <Todo
-                  todo={todo}
-                  i={i}
-                  //updateTodo={updateTodo}
-                  //updataHandle={updataHandle}
-                  //deleteTodo={deleteTodo}
-                  //editTodo={editTodo}
-                  //editTodoHandle={editTodoHandle}
-                  key={todo.id}
-                />
+                <Todo todo={todo} key={todo.id} />
               );
             })}
           </ul>

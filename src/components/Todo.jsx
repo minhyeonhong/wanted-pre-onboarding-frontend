@@ -1,17 +1,42 @@
-import React from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { StButton } from '../styles/common/button.styled';
 import { StInput } from '../styles/common/input.styled';
+import useInput from '../hooks/useInput';
+import { useTodo } from '../contexts/TodoContext';
 
-const Todo = ({
-  todo,
-  i,
-  updateTodo,
-  updataHandle,
-  deleteTodo,
-  editTodo,
-  editTodoHandle,
-}) => {
+const Todo = ({ todo }) => {
+  const [isEdit, setIsEdit] = useState(false);
+  const { update, remove } = useTodo();
+  const editHandle = () => {
+    setIsEdit(!isEdit);
+  }
+
+  const [editTodo, setEditTodo, editTodoHandle] = useInput(todo);
+
+  const updateTodo = (type, todo) => {
+    switch (type) {
+      case "checked": {
+        update({ ...todo, isCompleted: !todo.isCompleted });
+
+        break;
+      }
+      default: {
+        if (editTodo.todo.trim() === '') return;
+
+        const isUpdate = update({ ...todo, todo: editTodo.todo });
+
+        if (isUpdate) editHandle();
+
+        break;
+      }
+    }
+  }
+
+  const deleteTodo = (id) => {
+    remove(id);
+  }
+
   return (
     <StTodoWrap>
       <label>
@@ -22,7 +47,7 @@ const Todo = ({
             updateTodo('checked', todo);
           }}
         />
-        {todo.isEdit ? (
+        {isEdit ? (
           <StInput
             type='text'
             data-testid='modify-input'
@@ -35,7 +60,7 @@ const Todo = ({
           <span>{todo.todo}</span>
         )}
       </label>
-      {todo.isEdit ? (
+      {isEdit ? (
         <StButtonWrap>
           <StButton
             data-testid='submit-button'
@@ -51,7 +76,7 @@ const Todo = ({
             color='#ffff'
             backgroundColor='#F0A4BD'
             onClick={() => {
-              updataHandle(i);
+              editHandle();
             }}>
             취소
           </StButton>
@@ -63,7 +88,8 @@ const Todo = ({
             color='#ffff'
             backgroundColor='#F0A4BD'
             onClick={() => {
-              updataHandle(i);
+              setEditTodo(todo);
+              editHandle();
             }}>
             수정
           </StButton>
