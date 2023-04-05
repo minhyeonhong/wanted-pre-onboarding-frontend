@@ -41,8 +41,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "proxy": "https://pre-onboarding-selection-task.shop/",
+  },  
+  "proxy": "http://localhost:8000/",
   "devDependencies": {
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.8.0",

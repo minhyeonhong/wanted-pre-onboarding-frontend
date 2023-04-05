@@ -21,7 +21,7 @@ const axiosInstance = new AxiosInstance(
   localTokenRepository
 );
 const authService = new AuthService(axiosInstance, localTokenRepository);
-const todoService = new TodoService(httpClient);
+const todoService = new TodoService(axiosInstance);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

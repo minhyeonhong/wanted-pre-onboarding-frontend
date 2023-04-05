@@ -18,7 +18,7 @@ const TodoListPage = () => {
 
   const addTodo = () => {
     if (createTodo.todo.trim() === '') return;
-    create(createTodo.todo);
+    create(createTodo);
   };
 
   useEffect(() => {
@@ -60,10 +60,8 @@ const TodoListPage = () => {
         </StCreateWrap>
         <StTodoListWrap>
           <ul>
-            {todos.map((todo) => {
-              return (
-                <Todo todo={todo} key={todo.id} />
-              );
+            {todos.map(todo => {
+              return <Todo todo={todo} key={todo.id} />;
             })}
           </ul>
         </StTodoListWrap>

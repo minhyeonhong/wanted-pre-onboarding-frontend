@@ -10,13 +10,13 @@ const Todo = ({ todo }) => {
   const { update, remove } = useTodo();
   const editHandle = () => {
     setIsEdit(!isEdit);
-  }
+  };
 
   const [editTodo, setEditTodo, editTodoHandle] = useInput(todo);
 
   const updateTodo = (type, todo) => {
     switch (type) {
-      case "checked": {
+      case 'checked': {
         update({ ...todo, isCompleted: !todo.isCompleted });
 
         break;
@@ -31,11 +31,11 @@ const Todo = ({ todo }) => {
         break;
       }
     }
-  }
+  };
 
-  const deleteTodo = (id) => {
+  const deleteTodo = id => {
     remove(id);
-  }
+  };
 
   return (
     <StTodoWrap>

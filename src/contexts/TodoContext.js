@@ -23,15 +23,18 @@ export function TodoProvider({ children, todoService }) {
   const update = async editTodo => {
     const isUpdate = await todoService.update(editTodo);
 
-    if (isUpdate) setTodos(
-      todos.map((todo) =>
-        todo.id === editTodo.id ? {
-          ...todo,
-          todo: editTodo.todo,
-          isCompleted: editTodo.isCompleted,
-        }
-          : todo
-      ));
+    if (isUpdate)
+      setTodos(
+        todos.map(todo =>
+          todo.id === editTodo.id
+            ? {
+                ...todo,
+                todo: editTodo.todo,
+                isCompleted: editTodo.isCompleted,
+              }
+            : todo
+        )
+      );
 
     return isUpdate;
   };
@@ -41,7 +44,7 @@ export function TodoProvider({ children, todoService }) {
 
     const isRemove = await todoService.remove(id);
 
-    if (isRemove) setTodos(todos.filter((todo) => todo.id !== id));
+    if (isRemove) setTodos(todos.filter(todo => todo.id !== id));
   };
 
   return (
